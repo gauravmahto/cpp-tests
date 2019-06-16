@@ -6,6 +6,7 @@
 *.lo
 *.o
 *.obj
+*.ilk
 
 # Precompiled Headers
 *.gch
@@ -30,3 +31,13 @@
 *.exe
 *.out
 *.app
+
+# Ouput
+bin
+
+# Debug
+*.pdb
+
+# VSCode
+.history
+.vscode/ipch
