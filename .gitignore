@@ -41,3 +41,5 @@ bin
 # VSCode
 .history
 .vscode/ipch
+/.vs
+/x64/Debug
