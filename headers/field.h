@@ -5,73 +5,78 @@
 #ifndef FIELD_H
 #define FIELD_H
 
-namespace cpptest 
+#include <memory>
+
+namespace cpptest
 {
 
-  template <class T>
-  class Field
-  {
-  public:
-    constexpr Field() = default;
+	template <class T>
+	class Field
+	{
+	public:
+		Field() = default;
 
-    constexpr Field(const Field<T> &rhs)
-    {
-      Clone(rhs);
-    };
-    constexpr Field &operator=(const Field<T> &rhs)
-    {
-      if (this != *rhs)
-      {
-        Clone(rhs);
-      }
+		Field(T&& val) : m_ptrVal(std::make_unique<T>(std::forward<T>(val))) {}
 
-      return (*this);
-    }
+		Field(const Field<T>& rhs)
+		{
+			Clone(rhs);
+		};
+		Field& operator=(const Field<T>& rhs)
+		{
+			if (this != *rhs)
+			{
+				Clone(rhs);
+			}
 
-    constexpr Field(Field<T> &&rhs) = default;
-    constexpr Field<T> &operator=(Field<T> &&rhs) = default;
+			return (*this);
+		}
 
-    ~Field() = default;
+		Field(Field<T>&& rhs) = default;
+		Field<T>& operator=(Field<T>&& rhs) = default;
 
-    constexpr void SetValue(T &&val)
-    {
-      CheckAndMakeValue();
-      *m_ptrVal = std::forward<T>(val);
-    }
+		~Field() = default;
 
-    constexpr T &GetValue()
-    {
-      CheckAndMakeValue();
+		void SetValue(T&& val)
+		{
+			CheckAndMakeValue();
+			*m_ptrVal = std::forward<T>(val);
+		}
 
-      return (*m_ptrVal);
-    }
+		T& GetValue()
+		{
+			CheckAndMakeValue();
 
-    constexpr const T &GetValue() const
-    {
-      CheckAndMakeValue();
+			return (*m_ptrVal);
+		}
 
-      return (*m_ptrVal);
-    }
+		const T& GetValue() const
+		{
+			CheckAndMakeValue();
 
-  private:
-    constexpr void CheckAndMakeValue() const
-    {
-      if (!m_ptrVal)
-      {
-        m_ptrVal = std::make_unique<T>();
-      }
-    }
+			return (*m_ptrVal);
+		}
 
-    constexpr void Clone(const Field<T> &rhs)
-    {
-      if (rhs.m_ptrVal.get())
-      {
-        CheckAndMakeValue();
-        *m_ptrVal = *rhs.m_ptrVal;
-      }
-    }
-    mutable std::unique_ptr<T> m_ptrVal;
-  };
+	private:
+		void CheckAndMakeValue() const
+		{
+			if (!m_ptrVal)
+			{
+				m_ptrVal = std::make_unique<T>();
+			}
+		}
+
+		void Clone(const Field<T>& rhs)
+		{
+			if (rhs.m_ptrVal.get())
+			{
+				CheckAndMakeValue();
+				*m_ptrVal = *rhs.m_ptrVal;
+			}
+		}
+
+		mutable std::unique_ptr<T> m_ptrVal{};
+	};
 
 }
 

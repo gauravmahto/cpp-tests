@@ -5,80 +5,80 @@
 #ifndef PERSON_H
 #define PERSON_H
 
-#include "string"
+#include <string>
 
 #include "field.h"
 
-namespace cpptest 
+namespace cpptest
 {
 
-  class Data
-  {
-  public:
-    constexpr Data() = default;
+	class Data
+	{
+	public:
+		Data() : m_id(0), m_name(L"") {}
 
-    constexpr Data(const Data &rhs) = default;
-    Data &operator=(const Data &rhs) = default;
+		Data(const Data& rhs) = default;
+		Data& operator=(const Data& rhs) = default;
 
-    constexpr Data(Data &&rhs) = default;
-    constexpr Data &operator=(Data &&rhs) = default;
+		Data(Data&& rhs) = default;
+		Data& operator=(Data&& rhs) = default;
 
-    ~Data() = default;
+		~Data() = default;
 
-    template <class T>
-    constexpr void SetId(T &&val)
-    {
-      m_id.SetValue(std::forward<T>(val));
-    }
+		template <class T>
+		void SetId(T&& val)
+		{
+			m_id.SetValue(std::forward<T>(val));
+		}
 
-    constexpr const int &GetId() const
-    {
-      return m_id.GetValue();
-    }
+		const int& GetId() const
+		{
+			return m_id.GetValue();
+		}
 
-    template <class T>
-    constexpr void SetName(T &&val)
-    {
-      m_name.SetValue(std::forward<T>(val));
-    }
+		template <class T>
+		void SetName(T&& val)
+		{
+			m_name.SetValue(std::forward<T>(val));
+		}
 
-    constexpr const std::wstring &GetName() const
-    {
-      return m_name.GetValue();
-    }
+		const std::wstring& GetName() const
+		{
+			return m_name.GetValue();
+		}
 
-  private:
-    Field<int> m_id;
-    Field<std::wstring> m_name;
-  };
+	private:
+		Field<int> m_id{ 0 };
+		Field<std::wstring> m_name{ L"" };
+	};
 
-  class Person
-  {
-  public:
-    constexpr Person() = default;
+	class Person
+	{
+	public:
+		Person() = default;
 
-    Person(const Person &rhs) = default;
-    Person &operator=(const Person &rhs) = default;
+		Person(const Person& rhs) = default;
+		Person& operator=(const Person& rhs) = default;
 
-    Person(Person &&rhs) = default;
-    Person &operator=(Person &&rhs) = default;
+		Person(Person&& rhs) = default;
+		Person& operator=(Person&& rhs) = default;
 
-    ~Person() = default;
+		~Person() = default;
 
-    template <class T>
-    constexpr void SetData(T &&val)
-    {
-      m_person.SetValue(std::forward<T>(val));
-    }
+		template <class T>
+		void SetData(T&& val)
+		{
+			m_person.SetValue(std::forward<T>(val));
+		}
 
-    constexpr const Data &GetData() const
-    {
-      return m_person.GetValue();
-    }
+		const Data& GetData() const
+		{
+			return m_person.GetValue();
+		}
 
-  private:
-    Field<Data> m_person;
-  };
+	private:
+		Field<Data> m_person{};
+	};
 
 }
 

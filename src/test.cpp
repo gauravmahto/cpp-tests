@@ -8,31 +8,35 @@
 
 using namespace cpptest;
 
-void main(void)
+int main(void)
 {
-  // Data someone;
 
-  // auto &id = someone.GetId();
-  // auto &name = someone.GetName();
+	// Data someone;
 
-  // someone.SetId(1);
-  // someone.SetName(L"Hi");
+	// auto &id = someone.GetId();
+	// auto &name = someone.GetName();
 
-  // std::wcout << id << L" -- " << name << "\n";
+	// someone.SetId(1);
+	// someone.SetName(L"Hi");
 
-  Person author;
-  auto authData = author.GetData();
+	// std::wcout << id << L" -- " << name << "\n";
 
-  std::wcout << "-----------Before assignment-----------";
-  std::wcout << authData.GetId() << L" -- " << authData.GetName() << "\n";
+	Person author{};
+	auto authData = author.GetData();
 
-  authData.SetId(1);
-  authData.SetName(L"Hi");
-  author.SetData(std::move(authData));
+	std::wcout << "-----------Before assignment-----------";
+	std::wcout << authData.GetId() << L" -- " << authData.GetName() << "\n";
 
-  auto &authData2 = author.GetData();
-  std::wcout << "-----------After assignment-----------";
-  std::wcout << authData2.GetId() << L" -- " << authData2.GetName() << "\n";
+	authData.SetId(1);
+	authData.SetName(L"Hi");
+	author.SetData(std::move(authData));
 
-  std::cin.get();
+	auto& authData2 = author.GetData();
+	std::wcout << "-----------After assignment-----------";
+	std::wcout << authData2.GetId() << L" -- " << authData2.GetName() << "\n";
+
+	std::cin.get();
+
+	return 0;
+
 }
